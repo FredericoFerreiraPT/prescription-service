@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: prescription-service
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.prescriptionservice: INFO
