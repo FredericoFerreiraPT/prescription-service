@@ -1,6 +1,8 @@
 package com.prescriptionservice.controllers;
 
 import com.prescriptionservice.exceptions.ConsultationNotFoundException;
+import com.prescriptionservice.exceptions.ConsultationAccessException;
+import com.prescriptionservice.exceptions.PatientNotFoundException;
 import com.prescriptionservice.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +77,38 @@ public class GlobalExceptionHandler {
         response.put("error_type", "not_found");
         
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
+    /**
+     * Handles patient not found exceptions.
+     * 
+     * @param ex The patient not found exception
+     * @return ResponseEntity with 404 Not Found status
+     */
+    @ExceptionHandler(PatientNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handlePatientNotFoundException(PatientNotFoundException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", "error");
+        response.put("error_type", "not_found");
+        
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
+    /**
+     * Handles consultation access exceptions when patient tries to access consultation they don't own.
+     * 
+     * @param ex The consultation access exception
+     * @return ResponseEntity with 403 Forbidden status
+     */
+    @ExceptionHandler(ConsultationAccessException.class)
+    public ResponseEntity<Map<String, Object>> handleConsultationAccessException(ConsultationAccessException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", "forbidden");
+        response.put("error_type", "access_denied");
+        
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
     
     /**

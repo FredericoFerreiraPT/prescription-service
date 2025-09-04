@@ -7,6 +7,8 @@ import com.prescriptionservice.repositories.QuestionRepository;
 import com.prescriptionservice.repositories.ProductRepository;
 import com.prescriptionservice.repositories.PatientRepository;
 import com.prescriptionservice.exceptions.ConsultationNotFoundException;
+import com.prescriptionservice.exceptions.ConsultationAccessException;
+import com.prescriptionservice.exceptions.PatientNotFoundException;
 import com.prescriptionservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,11 +78,13 @@ public class ConsultationService {
         
         // Verify patient exists (would normally get patientId from auth token)
         Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new IllegalArgumentException("Patient not found: " + patientId));
-        
+                .orElseThrow(() -> new PatientNotFoundException(patientId));
+
+        // TODO: Here we would extract patient data from the retrieved Patient, rather than accepting it in the request
+
         // Ensure consultation belongs to the authenticated patient
         if (!patientId.equals(consultation.getPatientId())) {
-            throw new IllegalArgumentException("Consultation does not belong to authenticated patient");
+            throw new ConsultationAccessException(patientId, consultationId);
         }
         
         List<Answer> answers = request.getAnswers().stream()
