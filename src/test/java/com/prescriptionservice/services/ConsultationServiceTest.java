@@ -221,7 +221,7 @@ class ConsultationServiceTest {
     void processConsultationShouldThrowExceptionWhenConsultationNotFound() {
         // Given
         String consultationId = "invalid-id";
-        ConsultationRequest request = new ConsultationRequest("John Doe", "1990-01-01", "123 Main St", Arrays.asList());
+        ConsultationRequest request = new ConsultationRequest("John Doe", "1990-01-01", "123 Main St", List.of());
         
         when(consultationRepository.findById(consultationId)).thenReturn(Optional.empty());
         

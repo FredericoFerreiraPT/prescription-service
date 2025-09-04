@@ -96,7 +96,7 @@ class ConsultationControllerTest {
     @Test
     void submitAnswersShouldReturnValidationErrorWhenInvalidRequest() throws Exception {
         // Given
-        ConsultationRequest invalidRequest = new ConsultationRequest("", "", "", Arrays.asList());
+        ConsultationRequest invalidRequest = new ConsultationRequest("", "", "", List.of());
         
         // When & Then
         mockMvc.perform(post("/api/consultations/consultation-123/answers")
@@ -111,8 +111,8 @@ class ConsultationControllerTest {
     @Test
     void submitAnswersShouldReturnNotFoundWhenConsultationNotExists() throws Exception {
         // Given
-        List<AnswerDto> answers = Arrays.asList(
-            new AnswerDto("Q1", "yes")
+        List<AnswerDto> answers = List.of(
+                new AnswerDto("Q1", "yes")
         );
         ConsultationRequest request = new ConsultationRequest("John Doe", "1990-01-01", "123 Main St", answers);
         
