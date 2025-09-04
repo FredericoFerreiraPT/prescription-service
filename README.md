@@ -141,16 +141,6 @@ POST /api/consultations/{consultationId}/answers
 
 ## Architecture
 
-### Design Decisions
-
-**Repository Pattern**: Used interfaces with in-memory implementations to provide abstraction for potential database integration.
-
-**DTO Separation**: Clear separation between entities and DTOs to provide API stability and validation.
-
-**Comprehensive Validation**: Jakarta Bean Validation annotations ensure data integrity at the API boundary.
-
-**Eligibility Rules**: Simple business rules that can be easily modified or expanded.
-
 ## Eligibility Assessment Logic
 
 The current eligibility assessment follows these rules:
@@ -161,14 +151,12 @@ The current eligibility assessment follows these rules:
    - 1-2 severe symptoms → Requires Review
    - 0 severe symptoms → Not Eligible
 
-## TODO - Production Considerations
+## TODO - Notes and Production Considerations
 
-## Notes
-
-- **Company References**: All company names and references have been anonymized
-- **Data Persistence**: Deliberately using in-memory storage for this exercise
-- **Validation**: Focused on barebones validation, just as a starting point, production would require more exhaustive checks
-- **Error Handling**: Again, just a skeleton of what it might look like, production would likely need detailed error codes and internationalization
+- **Repository Pattern**: Used interfaces with in-memory implementations to provide abstraction for potential database integration.
+- **DTO Separation**: Clear separation between entities and DTOs to provide API stability and validation.
+- **Simple Validation**: Validation annotations to ensure data integrity at the API boundary. Validation is quite simple, productionizing this would require making existing validation more exhaustive.
+- **Error Handling**: Just a skeleton of what it might look like, production would likely need detailed error codes and internationalization
 - **Eligibility Logic**: At the moment, the actual code to determine if a patient is eligible lives in the ConsultationService, in one method (assessEligibility). In a production-ready application, this would surely be a separate service, I imagine there would be scope for far more complex analysis. I'm aware of this, and I put all the rudimentary logic for eligibility assessment in this method just as a sample of some possible cases.
 - AnswerDto could possibly have a boolean field for yes/no questions. This would need some attention/data modeling.
 - The response messages for eligibility requests should not be hardcoded. Especially in a scenario where internationalisation is a concern.
