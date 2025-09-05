@@ -153,6 +153,7 @@ The current eligibility assessment follows these rules:
 
 ## TODO - Notes and Production Considerations
 
+- Code should go through further review in regard to code style and maintainability (ie, loose strings and ints converted to constants where appropriate, etc) 
 - **Repository Pattern**: Used interfaces with in-memory implementations to provide abstraction for potential database integration.
 - **DTO Separation**: Clear separation between entities and DTOs to provide API stability and validation.
 - **Simple Validation**: Validation annotations to ensure data integrity at the API boundary. Validation is quite simple, productionizing this would require making existing validation more exhaustive.
